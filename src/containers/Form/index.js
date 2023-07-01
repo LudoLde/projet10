@@ -19,6 +19,7 @@ const Form = ({ onSuccess, onError }) => {
       async (evt) => {
          evt.preventDefault();
          setSending(true);
+         console.log(evt);
          // We try to call mockContactApi
          try {
             await mockContactApi();
@@ -36,7 +37,7 @@ const Form = ({ onSuccess, onError }) => {
       <form onSubmit={sendContact}>
          <div className="row">
             <div className="col">
-               <Field placeholder="" label="Nom" />
+               <Field placeholder="" label="Nom" name="prenom" />
                <Field placeholder="" label="Prénom" />
                <Select selection={["Personel", "Entreprise"]} onChange={() => null} label="Personel / Entreprise" type="large" titleEmpty />
                <Field placeholder="" label="Email" />

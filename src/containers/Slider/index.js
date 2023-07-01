@@ -19,7 +19,7 @@ const Slider = () => {
       <div className="SlideCardList">
          {byDateDesc?.map((event, idx) => (
             <>
-               <div key={event.title} className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}>
+               <div key={event.id} className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}>
                   <img src={event.cover} alt="forum" />
                   <div className="SlideCard__descriptionContainer">
                      <div className="SlideCard__description">
