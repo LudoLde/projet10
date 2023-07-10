@@ -17,22 +17,30 @@ const Slider = () => {
    });
    return (
       <div className="SlideCardList">
-         {byDateDesc?.map((event, idx) => (
+         {byDateDesc?.map((focus, idx) => (
             <>
-               <div key={event.id} className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}>
-                  <img src={event.cover} alt="forum" />
-                  <div className="SlideCard__descriptionContainer">
-                     <div className="SlideCard__description">
-                        <h3>{event.title}</h3>
-                        <p>{event.description}</p>
-                        <div>{getMonth(new Date(event.date))}</div>
+               {focus && (
+                  <div key={focus.id} className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}>
+                     <img src={focus.cover} alt="forum" />
+                     <div className="SlideCard__descriptionContainer">
+                        <div className="SlideCard__description">
+                           <h3>{focus.title}</h3>
+                           <p>{focus.description}</p>
+                           <div>{getMonth(new Date(focus.date))}</div>
+                        </div>
                      </div>
                   </div>
-               </div>
+               )}
                <div className="SlideCard__paginationContainer">
                   <div className="SlideCard__pagination">
                      {byDateDesc.map((paginationEvent, radioIdx) => (
-                        <input key={`${paginationEvent.id}`} type="radio" name="radio-button" checked={index === radioIdx} readOnly />
+                        <input
+                           key={`${paginationEvent.id}-${focus.id}`}
+                           type="radio"
+                           name="radio-button"
+                           checked={index === radioIdx}
+                           readOnly
+                        />
                      ))}
                   </div>
                </div>

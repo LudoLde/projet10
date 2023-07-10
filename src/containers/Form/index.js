@@ -10,22 +10,19 @@ const mockContactApi = () =>
    });
 
 const Form = ({ onSuccess, onError }) => {
-   const [sending, setSending] = useState(null);
-   const [successMessage, setSuccessMessage] = useState(null);
-   /* const validateForm = () =>{
-    if()
-   } */
+   const [sending, setSending] = useState(false);
+
    const sendContact = useCallback(
       async (evt) => {
          evt.preventDefault();
+
          setSending(true);
-         console.log(evt);
+
          // We try to call mockContactApi
          try {
             await mockContactApi();
-            setSending(true);
             onSuccess();
-            setSuccessMessage("le formulaire a été envoyé avec succès !");
+            setSending(false);
          } catch (err) {
             setSending(false);
             onError(err);
@@ -37,8 +34,8 @@ const Form = ({ onSuccess, onError }) => {
       <form onSubmit={sendContact}>
          <div className="row">
             <div className="col">
-               <Field placeholder="" label="Nom" name="prenom" />
-               <Field placeholder="" label="Prénom" />
+               <Field placeholder="" label="Nom" name="Nom" />
+               <Field placeholder="" label="Prénom" name="prenom" />
                <Select selection={["Personel", "Entreprise"]} onChange={() => null} label="Personel / Entreprise" type="large" titleEmpty />
                <Field placeholder="" label="Email" />
                <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
@@ -46,7 +43,6 @@ const Form = ({ onSuccess, onError }) => {
                </Button>
             </div>
             <div className="col">
-               {successMessage && <p>{successMessage}</p>}
                <Field placeholder="message" label="Message" type={FIELD_TYPES.TEXTAREA} />
             </div>
          </div>

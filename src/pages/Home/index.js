@@ -13,7 +13,9 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-   const data = useData().data;
+   // const data = useData().data;
+   const { data } = useData();
+   const data1 = data?.events.sort((evtA, evtB) => (new Date(evtA.date) < new Date(evtB.date) ? 1 : -1));
    return (
       <>
          <header>
@@ -86,13 +88,9 @@ const Page = () => {
          <footer className="row">
             <div className="col presta">
                <h3>Notre derniére prestation</h3>
-               <EventCard
-                  imageSrc={data?.events[0].cover}
-                  title={data?.events[0].title}
-                  date={new Date(data?.events[0].date)}
-                  small
-                  label="boom"
-               />
+               {data1 && (
+                  <EventCard imageSrc={data1[0]?.cover} title={data1[0]?.title} date={new Date(data1[0]?.date)} small label="boom" />
+               )}
             </div>
             <div className="col contact">
                <h3>Contactez-nous</h3>

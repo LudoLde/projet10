@@ -13,16 +13,25 @@ const EventList = () => {
    const { data, error } = useData();
    const [type, setType] = useState();
    const [currentPage, setCurrentPage] = useState(1);
-   const filteredEvents = ((!type ? data?.events : data?.events) || []).filter((event, index) => {
-      if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
-         return true;
-      }
-      return false;
-   });
-   const changeType = (evtType) => {
-      setCurrentPage(1);
-      setType(evtType);
+   const getFromChild = (newValue) => {
+      setType(newValue);
    };
+   const filterEvents = () =>
+      data?.events.filter((event, index) => {
+         if (!type) {
+            if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
+               return true;
+            }
+            return false;
+         }
+         return type === event.type;
+      });
+   console.log(type);
+   const filteredEvents = filterEvents();
+   /* const changeType = () => {
+      setCurrentPage(1);
+      filterEvents();
+   }; */
    const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
    const typeList = new Set(data?.events.map((event) => event.type));
    return (
@@ -33,7 +42,7 @@ const EventList = () => {
          ) : (
             <>
                <h3 className="SelectTitle">Catégories</h3>
-               <Select selection={Array.from(typeList)} onChange={(value) => (value ? changeType(value) : changeType(null))} />
+               <Select selection={Array.from(typeList)} onChange={filterEvents} getFromChild={getFromChild} />
                <div id="events" className="ListContainer">
                   {filteredEvents.map((event) => (
                      <Modal key={event.id} Content={<ModalEvent event={event} />}>
