@@ -26,7 +26,6 @@ const EventList = () => {
          }
          return type === event.type;
       });
-   console.log(type);
    const filteredEvents = filterEvents();
    /* const changeType = () => {
       setCurrentPage(1);
