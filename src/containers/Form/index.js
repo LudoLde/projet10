@@ -11,42 +11,30 @@ const mockContactApi = () =>
 
 const Form = ({ onSuccess, onError }) => {
    const [sending, setSending] = useState(false);
-   const [nomValue, setNomValue] = useState("");
-   const [isChampRempli, setIsChampRempli] = useState(true);
-   const handleNomChange = (value) => {
-      setNomValue(value);
-   };
 
-   console.log(nomValue);
    const sendContact = useCallback(
       async (evt) => {
          evt.preventDefault();
-
-         if (nomValue.trim() === "") {
-            setIsChampRempli(false);
-            return;
-         }
 
          setSending(true);
 
          // We try to call mockContactApi
          try {
             await mockContactApi();
+            await setSending(false);
             onSuccess();
-            setSending(false);
          } catch (err) {
             setSending(false);
             onError(err);
          }
       },
-      [onSuccess, onError, nomValue]
+      [onSuccess, onError]
    );
    return (
       <form onSubmit={sendContact}>
          <div className="row">
             <div className="col">
-               <Field placeholder="" label="Nom" name="Nom" nomValue={nomValue} onNomChange={handleNomChange} />
-               {!isChampRempli && <p>Veuillez remplir le champ !</p>}
+               <Field placeholder="" label="Nom" name="Nom" />
                <Field placeholder="" label="Prénom" name="prenom" />
                <Select selection={["Personel", "Entreprise"]} onChange={() => null} label="Personel / Entreprise" type="large" titleEmpty />
                <Field placeholder="" label="Email" />
