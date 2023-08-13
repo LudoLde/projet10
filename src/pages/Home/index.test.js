@@ -34,7 +34,10 @@ describe("When a page is created", () => {
       // to implement
    });
    it("a footer is displayed", () => {
-      // to implement
+      const { container } = render(<Home />);
+      const footerElement = container.querySelector("footer");
+
+      expect(footerElement).toBeInTheDocument();
    });
    it("an event card, with the last event, is displayed", () => {
       // to implement
