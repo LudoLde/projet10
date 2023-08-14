@@ -21,8 +21,8 @@ describe("When Events is created", () => {
                bubbles: true,
             })
          );
-         await screen.findByText("En cours");
-         await screen.findByText("Envoyer");
+         expect(await screen.findByText("En cours")).toBeVisible();
+         expect(await screen.findByText("Envoyer")).toBeVisible();
          expect(onSuccess).toHaveBeenCalled();
       });
    });

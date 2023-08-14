@@ -20,8 +20,8 @@ describe("When Form is created", () => {
                bubbles: true,
             })
          );
-         await screen.findByText("En cours");
-         await screen.findByText("Message envoyé !");
+         expect(await screen.findByText("En cours")).toBeVisible();
+         expect(await screen.findByText("Message envoyé !")).toBeVisible();
       });
    });
 });
