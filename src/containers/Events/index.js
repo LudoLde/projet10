@@ -16,16 +16,14 @@ const EventList = () => {
    const getFromChild = (newValue) => {
       setType(newValue);
    };
-   const filterEvents = () =>
-      data?.events.filter((event, index) => {
-         if (!type) {
-            if ((currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index) {
-               return true;
-            }
-            return false;
-         }
-         return type === event.type;
-      });
+   const filterEvents = () => {
+      const events = data?.events.filter((event) => !type || type === event.type);
+      if (events?.length > PER_PAGE) {
+         return events.filter((event, index) => (currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index);
+      }
+      return events;
+   };
+
    const filteredEvents = filterEvents();
    const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
    const typeList = new Set(data?.events.map((event) => event.type));
