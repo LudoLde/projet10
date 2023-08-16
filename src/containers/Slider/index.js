@@ -6,9 +6,11 @@ import "./style.scss";
 const Slider = () => {
    const { data } = useData();
    const [index, setIndex] = useState(0);
+   // Modification du sens de sort pour ordre décroissant
    const byDateDesc = data?.focus.sort((evtA, evtB) => (new Date(evtA.date) > new Date(evtB.date) ? -1 : 1));
    const nextCard = () => {
       if (byDateDesc) {
+         // Ajout d'un -1 à la methode byDateDesc.length
          setTimeout(() => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), 5000);
       }
    };
@@ -34,7 +36,13 @@ const Slider = () => {
                <div className="SlideCard__paginationContainer">
                   <div className="SlideCard__pagination">
                      {byDateDesc.map((paginationFocus, radioIdx) => (
-                        <input key={paginationFocus.id} type="radio" name="radio-button" checked={index === radioIdx} readOnly />
+                        <input
+                           key={paginationFocus.id}
+                           type="radio"
+                           name="radio-button"
+                           /* remplace idx par index */ checked={index === radioIdx}
+                           /* Ajout readOnly */ readOnly
+                        />
                      ))}
                   </div>
                </div>

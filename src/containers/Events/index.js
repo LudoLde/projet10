@@ -13,9 +13,11 @@ const EventList = () => {
    const { data, error } = useData();
    const [type, setType] = useState();
    const [currentPage, setCurrentPage] = useState(1);
+   // Création de la fonction pour récupérer le valeur du type
    const getFromChild = (newValue) => {
       setType(newValue);
    };
+   // Méthode pour filtrer les éléments et la bonne pagination
    const filterEvents = () => {
       const events = data?.events.filter((event) => !type || type === event.type);
       if (events?.length > PER_PAGE) {
@@ -35,24 +37,31 @@ const EventList = () => {
          ) : (
             <>
                <h3 className="SelectTitle">Catégories</h3>
-               <Select selection={Array.from(typeList)} onChange={filterEvents} getFromChild={getFromChild} />
-               {filteredEvents && (
-                  <div id="events" className="ListContainer">
-                     {filteredEvents.map((event) => (
-                        <Modal key={event.id} Content={<ModalEvent event={event} />}>
-                           {({ setIsOpened }) => (
-                              <EventCard
-                                 onClick={() => setIsOpened(true)}
-                                 imageSrc={event.cover}
-                                 title={event.title}
-                                 date={new Date(event.date)}
-                                 label={event.type}
-                              />
-                           )}
-                        </Modal>
-                     ))}
-                  </div>
-               )}
+
+               <Select
+                  selection={Array.from(typeList)}
+                  /* Modification de la méthode onChange et ajout de getFromChild */ onChange={filterEvents}
+                  getFromChild={getFromChild}
+               />
+               {
+                  /* Ajout de la condition filteredEvent pour régler erreur console */ filteredEvents && (
+                     <div id="events" className="ListContainer">
+                        {filteredEvents.map((event) => (
+                           <Modal key={event.id} Content={<ModalEvent event={event} />}>
+                              {({ setIsOpened }) => (
+                                 <EventCard
+                                    onClick={() => setIsOpened(true)}
+                                    imageSrc={event.cover}
+                                    title={event.title}
+                                    date={new Date(event.date)}
+                                    label={event.type}
+                                 />
+                              )}
+                           </Modal>
+                        ))}
+                     </div>
+                  )
+               }
                <div className="Pagination">
                   {[...Array(pageNumber || 0)].map((_, n) => (
                      // eslint-disable-next-line react/no-array-index-key
